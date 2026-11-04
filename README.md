@@ -1,36 +1,49 @@
 # Lyric Popup Kelas It
 
-Lyric Popup Kelas It — project by Nabil Aulia Dika (dezzorigin).
+Lyric Popup Kelas It — project oleh Nabil Aulia Dika (dezzorigin).
 
 ## Status Proyek
 
 **Dalam pengembangan** _(README ada)_
 
-## Tech Stack
+## 📋 Tech Stack
 
 Python
 
-## Struktur Proyek
+## 🏗️ Arsitektur
+
+```mermaid
+flowchart LR
+  U[Pengguna] --> C[CLI / App]
+  C --> L[Core Logic]
+  L --> D[(Data)]
+```
+
+## 📁 Struktur Proyek
 
 ```
-.gitignore
+LICENSE
+PRD.md
 README.md
 lagu.mp3
 main.py
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python main.py
+# Install dependencies
+npm install
+
+# Jalankan development server
+npm run dev
 ```
 
-## Lisensi
+> Untuk project HTML/Python/Go, lihat instruksi di atas atau file konfigurasi.
 
-MIT — lihat file [LICENSE](./LICENSE).
+## 📄 Lisensi
+
+MIT — lihat [LICENSE](./LICENSE).
 
 ---
-_Dibuat dan dikelola oleh Nabil Aulia Dika. Kontribusi dan issue welcome._
+_Dikembangkan oleh **dezzorigin** (Nabil Aulia Dika)._
