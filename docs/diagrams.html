@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Diagram — Lyric Popup Kelas IT</title>
+<style>
+  body { font-family: sans-serif; max-width: 920px; margin: 32px auto; padding: 0 20px; color: #171310; background: #f5f1e8; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.2rem; margin-top: 40px; }
+  p { line-height: 1.6; max-width: 72ch; }
+  svg { width: 100%; height: auto; display: block; background: #fff; border: 3px solid #171310; border-radius: 4px; }
+  code { background: #e8e2d4; padding: 1px 5px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<h1>Diagram — Lyric Popup Kelas IT</h1>
+<p>Dibuat sebagai HTML+SVG (bukan Mermaid), mengikuti palet landing:
+panggung <code>#171310</code>, krem <code>#F5F1E8</code>, sorot
+<code>#F0A500</code>, ungu <code>#6D4BD8</code>.</p>
+
+<h2>1. Peta modul</h2>
+<svg viewBox="0 0 880 430" role="img" aria-label="Peta modul lyric-popup-kelas-it">
+  <rect x="20" y="20" width="840" height="390" fill="none" stroke="#171310" stroke-width="3"/>
+  <text x="40" y="52" font-size="18" font-weight="bold" fill="#171310">lyric-popup-kelas-it</text>
+
+  <rect x="40" y="80" width="240" height="110" fill="#f5f1e8" stroke="#171310" stroke-width="3"/>
+  <text x="56" y="112" font-size="16" font-weight="bold" fill="#171310">main.py</text>
+  <text x="56" y="138" font-size="13" fill="#171310">LYRICS (15 baris)</text>
+  <text x="56" y="158" font-size="13" fill="#171310">LyricBox (tkinter)</text>
+  <text x="56" y="178" font-size="13" fill="#171310">play_music (pygame)</text>
+
+  <rect x="320" y="80" width="240" height="110" fill="#f5f1e8" stroke="#171310" stroke-width="3"/>
+  <text x="336" y="112" font-size="16" font-weight="bold" fill="#171310">lagu.mp3 · 7,8 MB</text>
+  <text x="336" y="138" font-size="13" fill="#171310">diputar dari 3:13</text>
+  <text x="336" y="158" font-size="13" fill="#171310">(MUSIC_OFFSET 193)</text>
+  <text x="336" y="178" font-size="13" fill="#171310">opsional di desktop</text>
+
+  <rect x="600" y="80" width="240" height="110" fill="#f0a500" stroke="#171310" stroke-width="3"/>
+  <text x="616" y="112" font-size="16" font-weight="bold" fill="#171310">Landing web</text>
+  <text x="616" y="138" font-size="13" fill="#171310">index.html + app.js</text>
+  <text x="616" y="158" font-size="13" fill="#171310">pemutar + panggung</text>
+  <text x="616" y="178" font-size="13" fill="#171310">LYRICS identik (tes)</text>
+
+  <rect x="40" y="230" width="380" height="90" fill="#fff" stroke="#6d4bd8" stroke-width="3"/>
+  <text x="56" y="262" font-size="16" font-weight="bold" fill="#171310">tests/test_lyrics.py</text>
+  <text x="56" y="288" font-size="13" fill="#171310">7 tes AST: jadwal, konstanta,</text>
+  <text x="56" y="308" font-size="13" fill="#171310">app.js ≡ main.py, MP3 valid</text>
+
+  <rect x="460" y="230" width="380" height="90" fill="#fff" stroke="#6d4bd8" stroke-width="3"/>
+  <text x="476" y="262" font-size="16" font-weight="bold" fill="#171310">CI (.github/workflows/ci.yml)</text>
+  <text x="476" y="288" font-size="13" fill="#171310">python-test · static · OSV · e2e · smoke</text>
+  <text x="476" y="308" font-size="13" fill="#171310">e2e Playwright hanya di CI</text>
+
+  <line x1="280" y1="135" x2="320" y2="135" stroke="#171310" stroke-width="3"/>
+  <line x1="560" y1="135" x2="600" y2="135" stroke="#171310" stroke-width="3"/>
+  <text x="286" y="126" font-size="12" fill="#171310">putar</text>
+  <text x="566" y="126" font-size="12" fill="#171310">cermin</text>
+  <line x1="160" y1="190" x2="160" y2="230" stroke="#6d4bd8" stroke-width="3"/>
+  <line x1="720" y1="190" x2="720" y2="230" stroke="#6d4bd8" stroke-width="3"/>
+  <text x="40" y="360" font-size="14" fill="#171310">Satu sumber kebenaran: LYRICS di main.py — landing hanya mencerminkannya.</text>
+  <text x="40" y="384" font-size="14" fill="#171310">Tidak ada backend, tidak ada database, tidak ada akun.</text>
+</svg>
+
+<h2>2. Alur penjadwalan lirik (desktop &amp; web sama)</h2>
+<svg viewBox="0 0 880 470" role="img" aria-label="Alur penjadwalan lirik">
+  <rect x="20" y="20" width="840" height="430" fill="none" stroke="#171310" stroke-width="3"/>
+
+  <rect x="40" y="50" width="220" height="70" fill="#f0a500" stroke="#171310" stroke-width="3"/>
+  <text x="56" y="80" font-size="15" font-weight="bold" fill="#171310">Mulai</text>
+  <text x="56" y="102" font-size="13" fill="#171310">musik dari 3:13 (193)</text>
+
+  <rect x="330" y="50" width="220" height="70" fill="#f5f1e8" stroke="#171310" stroke-width="3"/>
+  <text x="346" y="80" font-size="15" font-weight="bold" fill="#171310">Jadwalkan 15 baris</text>
+  <text x="346" y="102" font-size="13" fill="#171310">jeda + SYNC_ADJUST (−500)</text>
+
+  <rect x="620" y="50" width="220" height="70" fill="#f5f1e8" stroke="#171310" stroke-width="3"/>
+  <text x="636" y="80" font-size="15" font-weight="bold" fill="#171310">Baris 1 di 3:20</text>
+  <text x="636" y="102" font-size="13" fill="#171310">baris 15 di 4:30,5</text>
+
+  <rect x="40" y="180" width="220" height="90" fill="#f5f1e8" stroke="#171310" stroke-width="3"/>
+  <text x="56" y="210" font-size="15" font-weight="bold" fill="#171310">Kotak muncul</text>
+  <text x="56" y="232" font-size="13" fill="#171310">typewriter 25 ms/huruf</text>
+  <text x="56" y="252" font-size="13" fill="#171310">pantul 30 ms/frame</text>
+
+  <rect x="330" y="180" width="220" height="90" fill="#f5f1e8" stroke="#171310" stroke-width="3"/>
+  <text x="346" y="210" font-size="15" font-weight="bold" fill="#171310">Kotak tampil</text>
+  <text x="346" y="232" font-size="13" fill="#171310">3,5–7 detik, lalu</text>
+  <text x="346" y="252" font-size="13" fill="#171310">auto-tutup / klik tutup</text>
+
+  <rect x="620" y="180" width="220" height="90" fill="#6d4bd8" stroke="#171310" stroke-width="3"/>
+  <text x="636" y="210" font-size="15" font-weight="bold" fill="#f5f1e8">Selesai 4:38</text>
+  <text x="636" y="232" font-size="13" fill="#f5f1e8">15 kotak, 78 detik</text>
+  <text x="636" y="252" font-size="13" fill="#f5f1e8">ESC tutup semua</text>
+
+  <line x1="260" y1="85" x2="330" y2="85" stroke="#171310" stroke-width="3"/>
+  <line x1="550" y1="85" x2="620" y2="85" stroke="#171310" stroke-width="3"/>
+  <line x1="730" y1="120" x2="730" y2="180" stroke="#171310" stroke-width="3"/>
+  <line x1="550" y1="225" x2="620" y2="225" stroke="#171310" stroke-width="3"/>
+  <line x1="260" y1="225" x2="330" y2="225" stroke="#171310" stroke-width="3"/>
+  <text x="40" y="320" font-size="14" fill="#171310">SPASI kapan saja: cek detik musik buat kalibrasi (desktop &amp; web).</text>
+  <text x="40" y="344" font-size="14" fill="#171310">Tanpa pygame / tanpa audio: jadwal tetap jalan, lirik tetap muncul.</text>
+  <text x="40" y="368" font-size="14" fill="#171310">Kalibrasi: ubah SYNC_ADJUST (batas −500) atau MUSIC_OFFSET — bukan jadwal.</text>
+  <text x="40" y="420" font-size="13" fill="#6d4bd8">Catatan: komentar asli main.py menulis 3:20–4:35; jadwal berakhir 4:38.</text>
+</svg>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lyric Popup Kelas IT — Olivia Rodrigo, “the cure” 3:20–4:38</title>
+<meta name="description" content="Etalase script desktop Python yang memutar lagu.mp3 dari detik 3:20 dan menelurkan 15 kotak lirik melayang Olivia Rodrigo — the cure. Putar di web dengan timing yang sama, atau jalankan main.py di desktop.">
+<meta property="og:title" content="Lyric Popup Kelas IT — “the cure”, 3:20–4:38">
+<meta property="og:description" content="Script Python yang memutar lagu dari detik 3:20 dan menelurkan 15 kotak lirik melayang. Pemutar web di sini memakai lagu.mp3 dan jadwal yang sama persis dengan main.py.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lyric-popup-kelas-it.pages.dev/">
+<meta property="og:image" content="https://lyric-popup-kelas-it.pages.dev/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lyric Popup Kelas IT — “the cure”, 3:20–4:38">
+<meta name="twitter:description" content="15 kotak lirik melayang dari detik 3:20. Pemutar web memakai lagu.mp3 dan jadwal yang sama persis dengan main.py.">
+<meta name="twitter:image" content="https://lyric-popup-kelas-it.pages.dev/og-image.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <p class="kicker">Kelas IT · Script desktop Python · Demo di kelas</p>
+  <h1>Lyric Popup<br><span class="h1-accent">Kelas IT</span></h1>
+  <p class="lede">Satu script Python, satu lagu, lima belas kotak lirik yang
+  melayang sendiri di layar. <code>main.py</code> memutar
+  <code>lagu.mp3</code> dari detik 3:20 dan menelurkan satu kotak lirik
+  tanpa title bar untuk tiap baris climax Olivia Rodrigo —
+  <strong>“the cure”</strong> — lengkap dengan efek ketik dan pantulan
+  ala screensaver DVD. Halaman ini etalasenya: pemutar di bawah memakai
+  <code>lagu.mp3</code> dan jadwal yang sama persis.</p>
+  <p class="song-line"><span class="song-artist">Olivia Rodrigo</span>
+  <span class="song-sep" aria-hidden="true">—</span>
+  <span class="song-title">the cure</span>
+  <span class="song-time">3:20–4:38 · 15 baris · 78 detik</span></p>
+</header>
+
+<main>
+  <section class="player" aria-label="Pemutar web">
+    <div class="player-head">
+      <h2>Pemutar web</h2>
+      <p class="player-note">Timing sama dengan <code>main.py</code>:
+      musik loncat ke 3:13 (<code>MUSIC_OFFSET = 193</code>), lirik pertama
+      muncul di 3:20 (<code>SYNC_ADJUST = −500&nbsp;ms</code>).</p>
+    </div>
+
+    <audio id="audio" src="lagu.mp3" preload="metadata"></audio>
+
+    <div class="transport">
+      <button id="btn-play" class="btn btn-primary" type="button" aria-label="Putar dari detik 3:13">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+        <span id="btn-play-label">Putar dari 3:13</span>
+      </button>
+      <button id="btn-jump" class="btn" type="button">Lompat ke 3:20</button>
+      <button id="btn-noaudio" class="btn" type="button">Lirik saja, tanpa audio</button>
+      <p class="clock" aria-live="off"><span id="clock-now">3:13</span><span class="clock-total"> / 4:38</span></p>
+    </div>
+
+    <div class="wave" id="wave" role="slider" aria-label="Posisi lagu" aria-valuemin="193" aria-valuemax="278" aria-valuenow="193" tabindex="0"></div>
+    <p class="wave-caption"><span>3:13 · musik mulai</span><span>3:20 · lirik pertama</span><span>4:38 · selesai</span></p>
+
+    <p class="player-status" id="player-status" role="status">Siap. Tekan Putar — atau Spasi untuk cek detik musik seperti di desktop.</p>
+    <p class="player-hint">ESC menutup semua kotak · Spasi cek detik musik · klik kotak untuk menutupnya</p>
+  </section>
+
+  <section class="stage-wrap" aria-label="Panggung kotak lirik">
+    <div class="stage-head">
+      <h2>Panggung kotak lirik</h2>
+      <p>Di desktop, tiap baris jadi satu jendela <code>Toplevel</code>
+      tanpa title bar yang melayang dan memantul. Di sini kotaknya hidup
+      di dalam panggung ini.</p>
+    </div>
+    <div class="stage" id="stage">
+      <p class="stage-empty" id="stage-empty">Panggung kosong. Tekan Putar dan
+      kotak lirik akan muncul satu-satu, mengetik sendiri, lalu melayang.</p>
+    </div>
+  </section>
+
+  <section class="setlist" aria-label="Setlist lirik">
+    <div class="setlist-head">
+      <h2>Setlist 3:20–4:38</h2>
+      <p>15 baris dari <code>LYRICS</code> di <code>main.py</code>. Klik
+      baris untuk lompat ke detiknya. Waktu dihitung dari
+      <code>jeda + SYNC_ADJUST</code> setelah 3:20.</p>
+    </div>
+    <ol class="setlist-rows" id="setlist"></ol>
+    <p class="setlist-foot">Lirik © Olivia Rodrigo — “the cure”.
+    Ditampilkan di sini sebagai kutipan demo sinkronisasi, bukan untuk
+    diunduh ulang. File audio <code>lagu.mp3</code> di repo ini adalah
+    salinan pribadi pemilik repo; dengarkan lagu resminya di
+    <a href="https://open.spotify.com/track/77JxSDvDcZVXNptwJOTX3m">Spotify</a>
+    atau <a href="https://www.youtube.com/watch?v=B402rKl4bUg">YouTube</a>.</p>
+  </section>
+
+  <section class="run" aria-label="Cara jalanin di desktop">
+    <div class="run-head">
+      <h2>Jalanin di desktop</h2>
+      <p>Pemutar web di atas cuma cermin. Yang asli: <code>python main.py</code>
+      di laptop, kotak liriknya betulan jadi jendela yang melayang di atas
+      semua aplikasi.</p>
+    </div>
+    <ol class="run-steps">
+      <li>
+        <h3>Siapkan lagu</h3>
+        <p>Taruh MP3 yang kamu punya di folder repo dengan nama
+        <code>lagu.mp3</code> (sudah ada satu di repo ini).</p>
+      </li>
+      <li>
+        <h3>Pasang suara (sekali saja)</h3>
+        <p><code>pip install pygame</code> — tanpa ini lirik tetap jalan,
+        cuma tanpa musik.</p>
+      </li>
+      <li>
+        <h3>Jalankan</h3>
+        <p><code>python main.py</code> — ESC menutup semua, Spasi cek detik
+        musik buat kalibrasi. Kalau lirik kecepatan, tambah
+        <code>SYNC_ADJUST</code>; kalau kelambatan, kurangi.</p>
+      </li>
+    </ol>
+    <div class="run-copy">
+      <code id="run-cmd">git clone https://github.com/dezzorigin/lyric-popup-kelas-it.git &amp;&amp; cd lyric-popup-kelas-it &amp;&amp; pip install -r requirements.txt &amp;&amp; python main.py</code>
+      <button class="btn btn-copy" type="button" data-copy="git clone https://github.com/dezzorigin/lyric-popup-kelas-it.git && cd lyric-popup-kelas-it && pip install -r requirements.txt && python main.py" aria-label="Salin perintah jalankan">Salin perintah</button>
+    </div>
+    <p class="run-note">Butuh Python 3.10+ dan tkinter (bawaan di kebanyakan
+    instalasi Python desktop). Di server tanpa layar / headless, script
+    tidak bisa membuka jendela — itu batas yang jujur, bukan bug:
+    verifikasi otomatis di CI hanya <code>py_compile</code> + uji jadwal
+    lirik tanpa GUI. Lihat <a href="docs/TESTING.md">docs/TESTING.md</a>.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Lyric Popup Kelas IT — oleh Nabil Aulia Dika (dezzorigin) · MIT ·
+  <a href="https://github.com/dezzorigin/lyric-popup-kelas-it">GitHub</a> ·
+  <a href="docs/DESIGN.md">Desain</a> · <a href="docs/ARCHITECTURE.md">Arsitektur</a></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
