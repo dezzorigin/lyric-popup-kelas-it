@@ -67,7 +67,8 @@ const boxes = []; // {el, x, y, dx, dy, timer, driftTimer, index}
 let spawned = new Set();
 let noAudioMode = false;
 let noAudioT0 = 0;
-let noAudioTimers = [];
+let showStopped = false; // ESC = berhenti seperti desktop (root.destroy)
+let rafId = 0;
 let audioFailed = false;
 
 // ── Setlist ───────────────────────────────────────────────────────────
@@ -214,12 +215,23 @@ function closeBox(state) {
 
 function closeAll() {
   Array.from(boxes).forEach(closeBox);
-  statusEl.textContent = "Semua kotak ditutup (ESC).";
+}
+
+// ESC di desktop = tutup semua + keluar. Di web: tutup semua kotak,
+// hentikan audio/jadwal supaya tidak ada kotak baru yang muncul lagi.
+function stopShow() {
+  showStopped = true;
+  cancelAnimationFrame(rafId);
+  audio.pause();
+  closeAll();
+  btnPlayLabel.textContent = "Putar dari 3:13";
+  statusEl.textContent = "Berhenti (ESC) — semua kotak ditutup, seperti keluar dari main.py.";
 }
 
 // ── Penjadwalan dari posisi lagu ───────────────────────────────────────
 function tick(now) {
   paintProgress(now);
+  if (showStopped) return; // ESC menghentikan pertunjukan (seperti desktop keluar)
   LYRICS.forEach((row, i) => {
     if (!spawned.has(i) && now >= lyricTime(i)) spawnBox(i);
   });
@@ -247,6 +259,9 @@ function seekTo(t) {
 
 // ── Kontrol ───────────────────────────────────────────────────────────
 function startPlayback() {
+  showStopped = false;
+  spawned.clear();
+  closeAll();
   if (audioFailed) { startNoAudio(); return; }
   if (audio.currentTime < MUSIC_OFFSET || audio.currentTime >= SEGMENT_END) {
     try { audio.currentTime = MUSIC_OFFSET; } catch (e) { /* seek gagal: main dari awal */ }
@@ -262,6 +277,7 @@ function startPlayback() {
 }
 
 function startNoAudio() {
+  showStopped = false;
   noAudioMode = true;
   noAudioT0 = performance.now();
   spawned.clear();
@@ -272,9 +288,9 @@ function startNoAudio() {
   const step = () => {
     const now = MUSIC_OFFSET + (performance.now() - noAudioT0) / 1000;
     tick(now);
-    if (now < SEGMENT_END + 1) requestAnimationFrame(step);
+    if (!showStopped && now < SEGMENT_END + 1) rafId = requestAnimationFrame(step);
   };
-  requestAnimationFrame(step);
+  rafId = requestAnimationFrame(step);
 }
 
 btnPlay.addEventListener("click", () => {
@@ -290,8 +306,8 @@ btnPlay.addEventListener("click", () => {
 });
 
 btnJump.addEventListener("click", () => {
-  seekTo(SEGMENT_START);
   if (audio.paused && !noAudioMode) startPlayback();
+  seekTo(SEGMENT_START);
   statusEl.textContent = "Lompat ke 3:20 — lirik pertama.";
 });
 
@@ -328,7 +344,7 @@ wave.addEventListener("keydown", (e) => {
 
 // ESC tutup semua, Spasi cek detik — sama seperti main.py.
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") { closeAll(); }
+  if (e.key === "Escape") { stopShow(); }
   if (e.code === "Space" && !/BUTTON|A|INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
     e.preventDefault();
     const pos = currentPos();

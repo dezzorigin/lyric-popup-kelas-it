@@ -37,7 +37,9 @@ Chromium lokal tidak bisa start di sandbox VM dev (mmap memfd
 ditolak EPERM), jadi `npm run e2e` hanya jalan di GitHub Actions.
 Yang diuji: kotak pertama muncul ~7 detik setelah "Lirik saja"
 (mode mulai dari 3:13, lirik pertama di 3:20), mengetik teks lengkap,
-auto-tutup setelah 5 detik; ESC menutup semua; klik baris setlist
+auto-tutup setelah 5 detik; ESC menutup semua kotak DAN menghentikan
+pertunjukan (seperti desktop yang keluar — tidak ada kotak baru yang
+muncul lagi); klik baris setlist
 ke-8 melompat ke 3:55; tombol salin menyalin perintah `git clone …
 && python main.py`; mobile 390px tanpa scroll horizontal.
 
