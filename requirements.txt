@@ -1,0 +1,4 @@
+# Dependensi Lyric Popup Kelas IT.
+# SATU dependensi, dan itu pun opsional: pygame memutar lagu.mp3.
+# Tanpa pygame, lirik tetap jalan tanpa musik (lihat main.py: play_music()).
+pygame==2.6.1

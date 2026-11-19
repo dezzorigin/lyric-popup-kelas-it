@@ -1,0 +1,122 @@
+name: CI
+
+# CI untuk lyric-popup-kelas-it (repo #43 — script desktop Python + landing).
+# Job:
+#   python-test    — py_compile main.py + pytest jadwal lirik (tanpa GUI/audio):
+#                    15 baris, jadwal konsisten, konstanta sinkron, app.js
+#                    identik dengan main.py, lagu.mp3 valid. BUKAN echo sukses.
+#   static-checks  — html-validate Node 24 + gate P0 anti-slop + tag OG.
+#   advisory-sweep — OSV batch (pola repo #24-#42); satu-satunya dependensi
+#                    produksi adalah pygame (opsional, dipin 2.6.1).
+#   playwright-e2e — landing statis di server lokal (desktop + mobile).
+#   smoke          — file yang di-deploy ada & tidak kosong.
+# Node 24 (html-validate 11 crash di Node 20, pola #29).
+# JANGAN `npx playwright install` di VM dev — hanya di CI.
+#
+# CATATAN LOCKFILE (19 Nov 2026): repo ini BELUM punya package-lock.json.
+# `npm install` gagal deterministik di VM dev — sandbox VM menolak tulis
+# file oleh proses yang sudah melakukan I/O jaringan. Karena itu CI memakai
+# `npm install` (bukan `npm ci`) dan TANPA `cache: npm` di setup-node
+# (keduanya butuh lockfile). Lockfile hasil instalasi CI diunggah sebagai
+# artifact (job static-checks) supaya bisa di-commit belakangan.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── Python: compile + uji jadwal lirik (tanpa GUI/audio) ───────────────
+  python-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile main.py
+        run: python3 -m py_compile main.py
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Uji jadwal lirik (7 tes, tanpa GUI/audio)
+        run: python3 -m pytest tests/ -q
+
+  # ── Pemeriksaan statis: HTML + gate P0 + tag OG ────────────────────────
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Validasi HTML
+        run: npx html-validate index.html
+
+      - name: Gate P0 + tag OG/Twitter
+        run: npm run validate
+
+      - name: Unggah package-lock hasil instalasi
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-lock
+          path: package-lock.json
+          if-no-files-found: warn
+
+  # ── Advisory sweep (OSV batch, tanpa auth) ─────────────────────────────
+  advisory-sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sweep pygame (PyPI) di OSV
+        run: python3 scripts/advisory-sweep.py
+
+  # ── E2E Playwright (landing statis, HANYA di CI) ──────────────────────
+  playwright-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E landing (desktop + mobile)
+        run: npm run e2e
+
+  # ── Smoke: file deploy ada & tidak kosong ──────────────────────────────
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: File deploy ada & tidak kosong
+        run: |
+          for f in index.html styles.css app.js favicon.svg og-image.png lagu.mp3; do
+            test -s "$f" || { echo "FAIL: $f hilang/kosong"; exit 1; }
+            echo "ok: $f ($(stat -c%s "$f") byte)"
+          done

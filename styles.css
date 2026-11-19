@@ -1,0 +1,364 @@
+/* Lyric Popup Kelas IT — palet & geometri dari docs/DESIGN.md.
+   Panggung #171310, Krem #F5F1E8, Sorot #F0A500, Ungu #6D4BD8,
+   Tinta #141210, Garis #3A3128. Radius 4px, border 3px, bayangan keras. */
+
+:root {
+  --panggung: #171310;
+  --krem: #f5f1e8;
+  --sorot: #f0a500;
+  --ungu: #6d4bd8;
+  --tinta: #141210;
+  --garis: #3a3128;
+  --muted: #c9bfa9;
+  --radius: 4px;
+  --shadow-hard: 6px 6px 0 #000;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--panggung);
+  color: var(--krem);
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+a { color: var(--sorot); }
+a:hover { color: var(--krem); }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--sorot);
+  outline-offset: 2px;
+}
+
+code {
+  font-family: "Space Grotesk", monospace;
+  background: #2a2118;
+  color: var(--sorot);
+  padding: 1px 6px;
+  border-radius: var(--radius);
+  font-size: 0.9em;
+}
+
+h1, h2, h3 {
+  font-family: "Anton", "Arial Narrow", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+h2 { font-size: 2rem; }
+h3 { font-size: 1.25rem; }
+
+/* ── Header poster ─────────────────────────────────────────────── */
+.site-header {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 56px 24px 40px;
+  border-bottom: 3px solid var(--garis);
+}
+
+.kicker {
+  margin: 0 0 16px;
+  color: var(--ungu);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.site-header h1 {
+  font-size: clamp(3.2rem, 10vw, 6rem);
+  color: var(--krem);
+}
+
+.h1-accent { color: var(--sorot); }
+
+.lede {
+  max-width: 68ch;
+  margin: 24px 0 0;
+  font-size: 1.1rem;
+  color: var(--krem);
+}
+
+.song-line {
+  margin: 24px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  font-size: 1.05rem;
+}
+
+.song-artist { font-weight: 700; }
+.song-title { font-family: "Anton", sans-serif; text-transform: uppercase; letter-spacing: 0.04em; color: var(--sorot); }
+.song-time {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  border: 1px solid var(--garis);
+  border-radius: var(--radius);
+  padding: 2px 10px;
+}
+
+/* ── Kerangka ──────────────────────────────────────────────────── */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section { padding: 40px 0; border-bottom: 3px solid var(--garis); }
+section:last-child { border-bottom: 0; }
+
+.player-head, .stage-head, .setlist-head, .run-head { margin-bottom: 24px; }
+.player-head p, .stage-head p, .setlist-head p, .run-head p {
+  max-width: 68ch;
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+
+/* ── Tombol ────────────────────────────────────────────────────── */
+.btn {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  min-height: 48px;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  border: 3px solid var(--krem);
+  background: transparent;
+  color: var(--krem);
+  cursor: pointer;
+  transition: transform 120ms ease-out, background-color 120ms ease-out, color 120ms ease-out;
+}
+.btn:hover { background: var(--krem); color: var(--tinta); }
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--sorot);
+  border-color: var(--sorot);
+  color: var(--tinta);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-primary:hover { background: var(--krem); border-color: var(--krem); }
+
+.btn-copy { min-height: 44px; border-color: var(--sorot); color: var(--sorot); }
+.btn-copy:hover { background: var(--sorot); color: var(--tinta); }
+
+/* ── Pemutar ───────────────────────────────────────────────────── */
+.transport {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.clock {
+  margin: 0 0 0 auto;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--sorot);
+}
+.clock-total { color: var(--muted); font-size: 1.1rem; }
+
+.wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 72px;
+  margin-top: 24px;
+  padding: 12px;
+  background: #211a13;
+  border: 3px solid var(--garis);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.wave span {
+  flex: 1;
+  background: var(--garis);
+  border-radius: 2px;
+  min-height: 4px;
+}
+.wave span.on { background: var(--sorot); }
+.wave span.now { background: var(--ungu); }
+
+.wave-caption {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.player-status { margin: 20px 0 0; font-weight: 500; }
+.player-hint { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+/* ── Panggung kotak lirik ──────────────────────────────────────── */
+.stage {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  background: #211a13;
+  border: 3px solid var(--garis);
+  border-radius: var(--radius);
+}
+
+.stage-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  margin: 0;
+  color: var(--muted);
+  max-width: 52ch;
+  margin-inline: auto;
+}
+
+.lyric-box {
+  position: absolute;
+  width: min(420px, 86%);
+  padding: 3px;
+  background: #000;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  z-index: 2;
+}
+.lyric-box-inner {
+  background: var(--krem);
+  color: var(--tinta);
+  border-radius: 2px;
+  padding: 20px 22px;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.lyric-box-text {
+  font-family: "Anton", sans-serif;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+.lyric-box.active .lyric-box-inner { outline: 4px solid var(--sorot); outline-offset: -4px; }
+
+/* ── Setlist ───────────────────────────────────────────────────── */
+.setlist-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 3px solid var(--garis);
+}
+.setlist-rows li {
+  display: grid;
+  grid-template-columns: 48px 92px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 8px;
+  border-bottom: 1px solid var(--garis);
+  cursor: pointer;
+  min-height: 56px;
+}
+.setlist-rows li:hover { background: #211a13; }
+.setlist-rows li.active { background: #2a2118; box-shadow: inset 4px 0 0 var(--sorot); }
+.setlist-num {
+  font-family: "Anton", sans-serif;
+  color: var(--ungu);
+  font-size: 1.1rem;
+}
+.setlist-time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--sorot);
+}
+.setlist-text {
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 1.05rem;
+}
+.setlist-dur { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.setlist-foot { margin: 20px 0 0; color: var(--muted); font-size: 0.9rem; max-width: 72ch; }
+
+/* ── Cara jalanin ──────────────────────────────────────────────── */
+.run-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.run-steps li {
+  border: 3px solid var(--garis);
+  border-radius: var(--radius);
+  padding: 20px;
+  background: #211a13;
+}
+.run-steps h3 { color: var(--sorot); margin-bottom: 8px; }
+.run-steps p { margin: 0; color: var(--krem); }
+
+.run-copy {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.run-copy code {
+  flex: 1;
+  min-width: 280px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.run-note { margin: 20px 0 0; color: var(--muted); max-width: 72ch; }
+
+/* ── Footer ────────────────────────────────────────────────────── */
+.site-footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.site-footer p { margin: 0; }
+
+/* ── Mobile ────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .site-header { padding: 40px 20px 32px; }
+  main { padding: 0 20px; }
+  section { padding: 32px 0; }
+  .stage { height: 360px; }
+  .lyric-box-text { font-size: 1.15rem; }
+  .setlist-rows li { grid-template-columns: 36px 76px 1fr; }
+  .setlist-dur { display: none; }
+  .run-steps { grid-template-columns: 1fr; }
+  .clock { margin-left: 0; }
+}
+
+/* ── Reduced motion: drift + typewriter jadi instan ─────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0ms !important; }
+}
